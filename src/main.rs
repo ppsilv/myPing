@@ -4,6 +4,15 @@ use std::process;
 use std::time::{Duration, Instant};
 use socket2::{Domain, Protocol, Socket, Type};
 
+/*
+TODO:
+    Add IPv6 support 🕸️
+    Implement proper packet parsing 🔍
+    Add statistics (packet loss, RTT min/max/avg) 📊
+    Make it async with tokio ⚡
+    happy coding! 😊
+*/
+
 // ICMP header structure
 #[repr(C, packed)]
 struct IcmpHeader {
