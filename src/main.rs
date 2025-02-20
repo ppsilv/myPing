@@ -92,12 +92,15 @@ fn send_ping(target: Ipv4Addr, timeout: Duration) -> Result<(), String> {
     
     let icmp_payload = &recv_data[ip_header_length..];
     if icmp_payload[0] == ICMP_ECHO_REPLY
-        && u16::from_be_bytes([icmp_payload[4], icmp_payload[5]]) == 0x1234
-        && u16::from_be_bytes([icmp_payload[6], icmp_payload[7]]) == 0x0001
+        && u16::from_be_bytes([icmp_payload[4], icmp_payload[5]]) == 0x3412
+        && u16::from_be_bytes([icmp_payload[6], icmp_payload[7]]) == 0x0100
     {
         println!("Reply from {}: bytes={} time={}ms", target, size, rtt);
         Ok(())
     } else {
+        println!("Reply from {}: bytes={} time={}ms", target, size, rtt);
+        println!("Four and five bytes: {}", u16::from_be_bytes([icmp_payload[4], icmp_payload[5]]) );
+        println!("Six  and Seven bytes: {}", u16::from_be_bytes([icmp_payload[6], icmp_payload[7]]) );
         Err("Received invalid ICMP response".into())
     }
 }
